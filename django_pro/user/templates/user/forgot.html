@@ -1,0 +1,22 @@
+{% extends "user/index.html" %}
+
+{% block start %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="container" style="mergin-auto">
+        <form method="post" action="{% url 'forgot' %}">
+            {% csrf_token %}
+            <h4> forgot password </h4>
+            <input type="email" value="" name="email" placeholder="Enter Email" > <br> <br>
+            <input type="submit" class="btn btn-success">
+
+        </form>
+    </div>
+</body>
+</html>
+
+{% endblock %}
