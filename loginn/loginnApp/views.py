@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.http import HttpResponse,HttpRequest
+from django.shortcuts import render
+
 
 from django.shortcuts import render
 
@@ -16,7 +18,8 @@ def login(request):
 
 
 def register(request):
-    return HttpResponse('register')
+    return render(request, 'register.html')
+
 
 
 
