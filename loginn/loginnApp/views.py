@@ -5,17 +5,28 @@ from django.shortcuts import render
 from loginnApp.models import employee
 
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate
 
 # Create your views here.
 
 
 def home(request):
-    return HttpResponse('hello world')
+    return HttpResponse('welcome to home')
 
 
 def login(request):
-    return HttpResponse('login')
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(email=email, password=password)
+        if user:
+            print('uuuuuuuuuuu',user)
+            return redirect(home)
+        else:
+            return redirect(login)
+    else:
+        return render(request, 'login.html')
 
 
 def register(request):
@@ -32,7 +43,7 @@ def register(request):
          email = email,
          password = password
         ).save()
-        return HttpResponse('Data save successfully')
+        return redirect(login)
     else:
         return render(request, 'register.html')
 
