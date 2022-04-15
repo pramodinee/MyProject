@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+        {% block content %}
+
+        <div class="messages">
+            {% for message in messages %}
+                {% if message %}
+                    <p class="text-center  alert alert-{{ message.tags }}">
+                        {{ message }}
+                     </p>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+
+
+        <br>
+        <div class="container-fluid">
+            <div class="row">
+                {% for post in posts %}
+
+                    <div class="col-md-6">
+                    <div class="img-thumbnail">
+                        <a href="{% url 'post_detail' post.id post.slug %}"> {{ post.title }}</a><small style='float:right'>{{ post.created }}</small><br>
+                        Author: {{ post.author }}<br> 
+                        {{ post.body }}
+                    </div>
+                    </div>
+                    <br>
+                {% empty %}
+                <br>
+                <h1> {{ request.GET.query }} Not Found</h1>
+                {% endfor %}
+            </div>
+        </div>
+<div class="container-fluid">
+
+
+
+  <ul class="pagination">
+      {% if posts.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ posts.previous.page_number }}">&laquo;</a>
+        </li>
+      {% endif %}
+    {% for p in posts.paginator.page_range %}
+         {% if posts.number == p %}
+        <li class="page-item active">
+            <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+        </li>
+        {% endif %}
+     {% endfor %}
+      {% if posts.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ posts.next.page_number }}">&raquo;</a>
+        </li>
+      {% endif %}
+  </ul>
+
+</div>
+
+
+        {% endblock %}
+
+     
+  

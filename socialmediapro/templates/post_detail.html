@@ -1,0 +1,75 @@
+ {% extends 'base.html' %}
+
+        {% block content %}
+
+        <style>
+            #img {
+                height : 250px;
+                width: 280px;
+            }
+        </style>
+        <div class="container-fluid">
+
+           <h3>{{ post.title }}</h3>
+           <small>Author By:{{ post.author}}</small>
+           <p>{{ post.body }}</p>
+
+
+
+            <div class="row-gallery">
+                <div class="container-fluid">
+                    <div class="row">
+                        {% for p in post.images_set.all %}
+                         <div class="col-md-3">
+                             <img src="{{ p.image.url }}" alt="No Image Found" id="img" class="img-thumbnail">
+                        </div>
+                         {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+
+            {{ total_likes }} Like {{ total_likes|pluralize }}
+
+            <form method = 'POST' action="{% url 'like_post' %}">
+            {% csrf_token %}
+                {% if is_liked %}
+                 <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-outline-danger">Dislike</button>
+                {% else %}
+                 <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">Like</button>
+                {% endif %}
+            </form>
+        </div>
+        {% if post.author == request.user %}
+        <div class="container-fluid">
+            <a href="{% url 'post_edit' id=post.id %}" class="btn btn-outline-success"> Edit </a>
+        </div>
+        <br>
+         <div class="container-fluid">
+            <a href="{% url 'post_delete' id=post.id %}" class="btn btn-outline-danger"> Delete </a>
+        </div>
+        <br>
+
+        <form method="POST" class="container-fluid">
+        {% csrf_token %}
+            {{ comment_form.as_p }}
+            <input type="submit" class="btn btn-success" value="Submit">
+        </form>
+
+        <div class="container-fluid">
+            {{ comments.count }} Coment {{ comments|pluralize }}
+            {% for comment in comments %}
+                <blockquote class="blockquote">
+                <p class="mb-0">{{ comment.content }}</p>
+                <footer class="blockquote-footer">By <cite title="Source Title">{{ comment.user }}</cite></footer>
+                </blockquote>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endblock %}
+
