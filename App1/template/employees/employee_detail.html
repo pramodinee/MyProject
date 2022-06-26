@@ -1,0 +1,29 @@
+{% extends 'employees/base.html' %}
+
+{% block title %} Welcome To Class Base View CURD Operations{% endblock %}
+
+{% block body %}
+<style>
+
+</style>
+
+
+<div class="container">
+
+    {% if employee %}
+      <ol>
+        <li>Employee No : {{ employee.eno }}</li>
+        <li>Employee Name : {{ employee.ename }}</li>
+        <li>Employee Salary : {{ employee.salary }}</li>
+        <li>Employee Address : {{ employee.address }}</li>
+        <li>Employee Mobile : {{ employee.mobile }}</li>
+
+      </ol>
+    {% else %}
+    <h1>Data Not Avalaible</h1>
+    {% endif %}
+    <a href="{% url 'employee' %}" class="btn btn-primary">Home Page</a>
+
+</div>
+
+{% endblock %}

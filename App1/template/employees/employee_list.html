@@ -1,0 +1,53 @@
+{% extends 'employees/base.html' %}
+
+{% block title %} Welcome To Class Base View CURD Operations{% endblock %}
+
+{% block body %}
+<style>
+    thead{
+        background-color: green;
+        color : white
+    }
+</style>
+
+
+<div class="container">
+
+    {% if employee_list %}
+    <table class="table table-bordered table-hover table-dark" >
+        <thead class="background-color:green">
+            <tr>
+                <th>Eno</th>
+                <th>Ename</th>
+                <th>Salary</th>
+                <th>Address</th>
+                <th>Mobile</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+       <tbody>
+
+             {% for employee in employee_list %}
+                <tr>
+                    <td>{{ employee.eno }}</td>
+                    <td>{{ employee.ename }}</td>
+                    <td>{{ employee.salary }}</td>
+                    <td>{{ employee.address }}</td>
+                    <td>{{ employee.mobile }}</td>
+                    <td>
+                        <a class="btn btn-success" href="{% url 'employeeUpdate' employee.id %}">Update</a>
+                        <a class="btn btn-danger" href="{% url 'employeeDelete' employee.id %}">Delate</a>
+                    </td>
+                </tr>
+            {% endfor %}
+       </tbody>
+    </table>
+    {% else %}
+    <h1>Data Not Avalaible</h1>
+    {% endif %}
+    <a  class="btn btn-primary" href="{% url 'employeeCreate' %}">Create New Employee</a>
+
+</div>
+
+{% endblock %}
